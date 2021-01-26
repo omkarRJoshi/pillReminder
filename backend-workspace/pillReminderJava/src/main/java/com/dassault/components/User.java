@@ -1,34 +1,22 @@
 package com.dassault.components;
 
-public class User {
-	String firstName;
-	String lastName;
-	String email;
+import java.sql.Date;
+
+public class User extends Person {
+	String country;
 	String password;
-	public User(String firstName, String lastName, String email, String password) {
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.email = email;
+	public User(String name, String contact, String bloodGroup, String email, Date dob, float weight, float height,
+			String country, String password) {
+		super(name, contact, bloodGroup, email, dob, weight, height);
+		this.country = country;
 		this.password = password;
 	}
 	
-	public String getFirstName() {
-		return firstName;
+	public String getCountry() {
+		return country;
 	}
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-	public String getLastName() {
-		return lastName;
-	}
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
+	public void setCountry(String country) {
+		this.country = country;
 	}
 	public String getPassword() {
 		return password;
@@ -36,7 +24,6 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
 	
 	
 }
