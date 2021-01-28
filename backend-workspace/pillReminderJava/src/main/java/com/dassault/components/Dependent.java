@@ -3,20 +3,28 @@ package com.dassault.components;
 import java.sql.Date;
 
 public class Dependent extends Person{
-	String relationship;
-
-	public Dependent(String name, String contact, String bloodGroup, String email, Date dob, float weight, float height,
-			String relationship) {
-		super(name, contact, bloodGroup, email, dob, weight, height);
-		this.relationship = relationship;
+	String relation;
+	
+	public Dependent() {
+		super();
+	}
+	
+	public Dependent(String relation, String name, String email, String contact, Date dob, String relationship) {
+		super(name, email, contact, dob);
+		this.relation = relation;
 	}
 
-	public String getRelationship() {
-		return relationship;
+	public Dependent(String relation, String name, String email, String contact, Date dob, String bloodGroup, float weight, float height) {
+		super(name, email, contact, dob, bloodGroup, weight, height);
+		this.relation = relation;
 	}
 
-	public void setRelationship(String relationship) {
-		this.relationship = relationship;
+	public String getRelation() {
+		return relation;
+	}
+
+	public void setRelation(String relation) {
+		this.relation = relation;
 	}
 	
 	

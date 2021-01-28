@@ -1,18 +1,29 @@
 package com.dassault.components;
 
 import java.sql.Date;
-import java.util.ArrayList;
 
 public class Person {
 	String name;
-	String contact;
-	String bloodGroup;
 	String email;
+	String contact;
 	Date dob;
+	String bloodGroup;
 	float weight;
 	float height;
-	ArrayList<MedicalHistory> medicalHistoryList;
-	public Person(String name, String contact, String bloodGroup, String email, Date dob, float weight, float height) {
+	
+	public Person() {
+		
+	}
+	//constructor for registration
+	public Person(String name, String email, String contact, Date dob) {
+		this.name = name;
+		this.email = email;
+		this.contact = contact;
+		this.dob = dob;
+	}
+	
+	//constructor for all fields - will be used while fetching data
+	public Person(String name, String email, String contact, Date dob, String bloodGroup, float weight, float height) {
 		this.name = name;
 		this.contact = contact;
 		this.bloodGroup = bloodGroup;
@@ -20,7 +31,6 @@ public class Person {
 		this.dob = dob;
 		this.weight = weight;
 		this.height = height;
-		medicalHistoryList = null;
 	}
 
 	public String getName() {
@@ -78,15 +88,5 @@ public class Person {
 	public void setHeight(float height) {
 		this.height = height;
 	}
-
-	public ArrayList<MedicalHistory> getMedicalHistoryList() {
-		return medicalHistoryList;
-	}
-	
-	public void addMedicalHistory(MedicalHistory history) {
-		medicalHistoryList.add(history);
-	}
-	
-	
 	
 }
