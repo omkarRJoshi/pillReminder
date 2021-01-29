@@ -10,14 +10,6 @@ public class User extends Person {
 		super();
 	}
 	
-	//constructor for registration
-	public User(String name, String email, String contact, Date dob, String country, String password) {
-		super(name, email, contact, dob);
-		System.out.println("Registration constructor called");
-		this.country = country;
-		this.password = password;
-	}
-	
 	//constructor for fetching data
 	public User(String name, String email, String contact, String country, Date dob, String password, String bloodGroup, float weight, float height) {
 		super(name, email, contact, dob, bloodGroup, weight, height);

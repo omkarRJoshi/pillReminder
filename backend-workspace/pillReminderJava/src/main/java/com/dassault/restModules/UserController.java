@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -13,23 +12,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dassault.components.User;
 import com.dassault.executors.UserExecutor;
-import com.dassault.utils.Constants;
 import com.dassault.utils.Database;
 
 @RestController
 public class UserController {
 	Connection connection;
 	UserExecutor userExecutor;
-	Statement stmt;
 	
 	public UserController() {
 		this.connection = Database.getConnection();
 		userExecutor = new UserExecutor();
-		try {
-			stmt=connection.createStatement();
-		} catch (SQLException e) {
-			System.out.println("Exception while stmt of UserController : " + e.getMessage());
-		}
 	}
 	
 	//registering user 

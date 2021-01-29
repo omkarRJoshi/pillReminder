@@ -8,11 +8,6 @@ public class Dependent extends Person{
 	public Dependent() {
 		super();
 	}
-	
-	public Dependent(String relation, String name, String email, String contact, Date dob, String relationship) {
-		super(name, email, contact, dob);
-		this.relation = relation;
-	}
 
 	public Dependent(String relation, String name, String email, String contact, Date dob, String bloodGroup, float weight, float height) {
 		super(name, email, contact, dob, bloodGroup, weight, height);

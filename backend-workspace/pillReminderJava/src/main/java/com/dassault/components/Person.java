@@ -14,13 +14,6 @@ public class Person {
 	public Person() {
 		
 	}
-	//constructor for registration
-	public Person(String name, String email, String contact, Date dob) {
-		this.name = name;
-		this.email = email;
-		this.contact = contact;
-		this.dob = dob;
-	}
 	
 	//constructor for all fields - will be used while fetching data
 	public Person(String name, String email, String contact, Date dob, String bloodGroup, float weight, float height) {

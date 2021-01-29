@@ -7,6 +7,6 @@ public class Constants {
 	static String dbPassword = "pillReminder";
 	
 	static public String userTb = "user";
-	static public String dependent = "";
+	static public String dependentTb = "dependent";
 
 }
