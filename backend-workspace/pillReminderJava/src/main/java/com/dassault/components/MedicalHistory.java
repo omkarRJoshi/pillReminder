@@ -12,6 +12,11 @@ public class MedicalHistory {
 	float dosageAmt;
 	Time dosageTime;
 	boolean emailNotification;
+	
+	public MedicalHistory() {
+		
+	}
+	
 	public MedicalHistory(String illness, String doctorDetails, String medicines, Date startDate, Date endDate,
 			float dosageAmt, Time dosageTime, boolean emailNotification) {
 		super();

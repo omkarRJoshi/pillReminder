@@ -32,16 +32,17 @@ public class DependentController {
 	//add dependent of an user
 	@CrossOrigin("*")
 	@PostMapping("/user/addDependent")
-	public boolean addDependent(@RequestParam String userId, @RequestBody Dependent dependent) {
+	public String addDependent(@RequestParam String userId, @RequestBody Dependent dependent) {
 		String dependentId = UUID.randomUUID().toString();
 		dependentId = dependentId.replaceAll("-", "");
 		
 		boolean addPerson = personExecutor.adddPerson(connection, null, dependentId, dependent);
 		boolean setRelation = dependentExecutor.setRelation(connection, null, userId, dependentId, dependent.getRelation());
 		
-		return addPerson & setRelation;
+		return addPerson & setRelation ? dependentId : "";
 	}
 	
+	//edit dependent details
 	@CrossOrigin("*")
 	@PutMapping("/dependent/update")
 	public boolean updateDependent(@RequestParam String personId, @RequestBody Dependent dependent) {
@@ -50,5 +51,4 @@ public class DependentController {
 		return updatePerson;
 	}
 	
-	//edit dependent detais
 }

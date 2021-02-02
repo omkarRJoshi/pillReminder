@@ -25,6 +25,7 @@ public class PersonExecutor {
 			pstmt.setFloat(8, p.getHeight());
 			
 			inserted = pstmt.executeUpdate() == 1;
+			pstmt.close();
 		} catch (SQLException e) {
 			System.out.println("Exception during pstmt of addPerson PersonExecutor " + e.getMessage());
 		}
@@ -49,6 +50,7 @@ public class PersonExecutor {
 			pstmt.setFloat(7, p.getHeight());
 			
 			updated = pstmt.executeUpdate() == 1;
+			pstmt.close();
 		} catch (SQLException e) {
 			System.out.println("Exception during pstmt of updatePerson PersonExecutor " + e.getMessage());
 		}
@@ -85,4 +87,6 @@ public class PersonExecutor {
 		
 		return gotPerson;
 	}
+	
+	
 }

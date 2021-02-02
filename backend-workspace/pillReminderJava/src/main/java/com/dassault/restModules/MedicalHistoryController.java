@@ -1,10 +1,13 @@
 package com.dassault.restModules;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.UUID;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,14 +32,32 @@ public class MedicalHistoryController {
 	//add medical history of a person
 	@CrossOrigin("*")
 	@PostMapping("/person/addMedicalHistory")
-	public boolean addUserMedicalHistory(@RequestParam String personId, @RequestBody MedicalHistory medicalHistory) {
+	public String addUserMedicalHistory(@RequestParam String personId, @RequestBody MedicalHistory medicalHistory) {
 		String historyId = UUID.randomUUID().toString();
 		historyId = historyId.replaceAll("-", "");
 		
 		boolean inserted = medicalHistoryExecutor.addMedicalHistory(connection, null, historyId, personId, medicalHistory);
 		
-		return inserted;
+		return inserted ? historyId : "";
 	}
 	
+	//get medical history of a Person
+	@CrossOrigin("*")
+	@GetMapping("/person/medicalHistory")
+	public ArrayList<MedicalHistory> getMedicalHistory(@RequestParam String personId){
+		ArrayList<MedicalHistory> histories = new ArrayList<>();
+		medicalHistoryExecutor.getMedicalHistory(connection, null, personId, histories);
+		return histories;
+	}
 	
+	//update medical history of a person
+	@CrossOrigin("*")
+	@PutMapping("/person/medicalHistory/update")
+	public boolean updateMedicalHistory(@RequestParam String historyId, @RequestBody MedicalHistory medicalHistory) {
+		boolean updated = false;
+		
+		updated = medicalHistoryExecutor.updateMedicalHistory(connection, null, historyId, medicalHistory);
+		
+		return updated;
+	}
 }

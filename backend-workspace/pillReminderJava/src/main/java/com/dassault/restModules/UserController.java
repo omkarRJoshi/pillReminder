@@ -31,14 +31,14 @@ public class UserController {
 	//registering user 
 	@CrossOrigin("*")
 	@PostMapping("/registerUser")
-	public boolean registerUser(@RequestBody User user) {
+	public String registerUser(@RequestBody User user) {
 		String userId = UUID.randomUUID().toString();
 		userId = userId.replaceAll("-", "");
 		
 		boolean addPerson = personExecutor.adddPerson(connection, null, userId, user);
 		boolean addUser = userExecutor.addUser(connection, null, userId, user);
 		
-		return addPerson & addUser;
+		return addPerson & addUser ? userId : "";
 	}
 	
 	//login of user using emailId and password

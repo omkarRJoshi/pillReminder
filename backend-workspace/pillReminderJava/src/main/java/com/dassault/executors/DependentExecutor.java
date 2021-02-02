@@ -22,6 +22,7 @@ public class DependentExecutor {
 			System.out.println(pstmt);
 			
 			inserted = pstmt.executeUpdate() == 1;
+			pstmt.close();
 		} catch (SQLException e) {
 			System.out.println("Exception during setRelation method of DependentExecutor " + e.getMessage());
 		}
