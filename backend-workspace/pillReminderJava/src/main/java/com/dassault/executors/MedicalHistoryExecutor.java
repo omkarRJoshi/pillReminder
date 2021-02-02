@@ -4,35 +4,34 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import com.dassault.components.Dependent;
+import com.dassault.components.MedicalHistory;
 import com.dassault.utils.Constants;
 
 public class MedicalHistoryExecutor {
 	
-	public PreparedStatement prepareStmtToAddDependent(Connection connection, String userId, Dependent dependent) {
-		String dependentId = "javaDependent1";
-		String query = "Insert into " + Constants.dependentTb + 
-					   " (dependentId, userId, relation, name, emailid, contactNo, bloodGroup, dob, weight, height) "
-				      + "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-		PreparedStatement pstmt = null;
+	public boolean addMedicalHistory(Connection connection, PreparedStatement pstmt, String historyId, String personId, MedicalHistory medicalHistory) {
+		boolean inserted = false;
+		String query = "insert into " + Constants.medicalHistoryTb + 
+					   "(historyId, personId , illness, doctorDetails, medicine, startDate, endDate, dosageAmt, dosageTime, emailNotfication)  " + 
+					   "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		try {
 			pstmt = connection.prepareStatement(query);
-			pstmt.setString(1, dependentId);
-			pstmt.setString(2, userId);
-			pstmt.setString(3, dependent.getRelation());
-			pstmt.setString(4, dependent.getName());
-			pstmt.setString(5, dependent.getEmail());
-			pstmt.setString(6, dependent.getContact());
-			pstmt.setString(7, dependent.getBloodGroup());
-			pstmt.setString(8, dependent.getDob().toString());
-			pstmt.setFloat(9, dependent.getWeight());
-			pstmt.setFloat(10, dependent.getHeight());
+			pstmt.setString(1, historyId);
+			pstmt.setString(2, personId);
+			pstmt.setString(3, medicalHistory.getIllness());
+			pstmt.setString(4, medicalHistory.getDoctorDetails());
+			pstmt.setString(5, medicalHistory.getMedicines());
+			pstmt.setDate(6, medicalHistory.getStartDate());
+			pstmt.setDate(7, medicalHistory.getEndDate());
+			pstmt.setFloat(8, medicalHistory.getDosageAmt());
+			pstmt.setTime(9, medicalHistory.getDosageTime());
+			pstmt.setBoolean(10, medicalHistory.isEmailNotification());
 			System.out.println(pstmt);
+			inserted = pstmt.executeUpdate() == 1;
 		} catch (SQLException e) {
-			System.out.println("Exception during pstmt of UserControll " + e.getMessage());
+			System.out.println("Exception during pstmt of MedicalHistoryExecutor " + e.getMessage());
 		}
-		
-		return pstmt;
+		return inserted;
 	}
 	
 }

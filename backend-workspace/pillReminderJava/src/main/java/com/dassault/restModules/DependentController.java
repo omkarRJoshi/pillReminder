@@ -3,7 +3,9 @@ package com.dassault.restModules;
 import java.sql.Connection;
 import java.util.UUID;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,6 +30,7 @@ public class DependentController {
 	}
 	
 	//add dependent of an user
+	@CrossOrigin("*")
 	@PostMapping("/user/addDependent")
 	public boolean addDependent(@RequestParam String userId, @RequestBody Dependent dependent) {
 		String dependentId = UUID.randomUUID().toString();
@@ -39,6 +42,13 @@ public class DependentController {
 		return addPerson & setRelation;
 	}
 	
+	@CrossOrigin("*")
+	@PutMapping("/dependent/update")
+	public boolean updateDependent(@RequestParam String personId, @RequestBody Dependent dependent) {
+		boolean updatePerson = personExecutor.updatePerson(connection, null, personId, dependent);
+		
+		return updatePerson;
+	}
 	
 	//edit dependent detais
 }

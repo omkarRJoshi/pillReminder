@@ -22,7 +22,7 @@ public class UserExecutor {
 			
 			inserted = pstmt.executeUpdate() == 1;
 		} catch (SQLException e) {
-			System.out.println("Exception during pstmt of UserExecutor " + e.getMessage());
+			System.out.println("Exception during pstmt in method addUser of UserExecutor " + e.getMessage());
 		}
 		
 		return inserted;
@@ -65,5 +65,51 @@ public class UserExecutor {
 		}
 		
 		return updatedRows == 1;
+	}
+	
+	public boolean getUser(Connection connection, PreparedStatement pstmt, String userId, User user) {
+		String query = "select * from " + Constants.userTb + " where userId = " + "'" + userId + "'";
+		ResultSet resultSet = null;
+		boolean gotUser = false;
+		
+		try {
+			pstmt = connection.prepareStatement(query);
+			resultSet = pstmt.executeQuery();
+			
+			resultSet.first();
+			
+			user.setCountry(resultSet.getString(3));
+			user.setPassword(resultSet.getString(4));
+			
+			gotUser = true;
+			
+			resultSet.close();
+			pstmt.close();
+		} catch (SQLException e) {
+			System.out.println("Exception during pstmt of getUser UserExecutor " + e.getMessage());
+		}
+		
+		return gotUser;
+	}
+	
+	public boolean updateUser(Connection connection, PreparedStatement pstmt, String userId, User user) {
+		boolean updated = false;
+		
+		String query = "Update " + Constants.userTb + " set " +
+				   	   "email = ?, country = ?, password = ?" + 
+				   	   "where userId = " + "'" + userId + "'";
+		
+		try {
+			pstmt = connection.prepareStatement(query);
+			pstmt.setString(1, user.getEmail());
+			pstmt.setString(2, user.getCountry());
+			pstmt.setString(3, user.getPassword());
+			
+			updated = pstmt.executeUpdate() == 1;
+		} catch (SQLException e) {
+			System.out.println("Exception during pstmt in method updateUser of UserExecutor " + e.getMessage());
+		}
+		
+		return updated;
 	}
 }

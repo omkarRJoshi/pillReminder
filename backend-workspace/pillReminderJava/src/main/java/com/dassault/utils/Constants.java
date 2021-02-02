@@ -9,5 +9,6 @@ public class Constants {
 	static public String personTb = "person";
 	static public String userTb = "user";
 	static public String relationTb = "relation";
+	static public String medicalHistoryTb = "MedicalHistory";
 
 }
