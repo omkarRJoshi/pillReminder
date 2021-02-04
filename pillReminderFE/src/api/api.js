@@ -14,6 +14,26 @@
       // })
       // console.log(response.json());
       // return JSON.stringify(response);
+   },
+
+   getJson : async function(url) {
+    try{
+      const response = await fetch(url);
+      const mideicalHistory = response.json();
+      return mideicalHistory;
+    }
+    catch(e){
+      console.log("Error while fetching api : ", e);
+    }
+   },
+
+   delete : async function(url){
+    return await fetch(url, {
+      method: 'Delete', // or 'PUT'
+      headers: {
+      'Content-Type': 'application/json',
+      },
+      })
    }
  }
  

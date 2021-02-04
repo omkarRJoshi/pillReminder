@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.sql.Time;
 
 public class MedicalHistory {
+	String historyId;
 	String illness;
 	String doctorDetails;
 	String medicines;
@@ -17,9 +18,10 @@ public class MedicalHistory {
 		
 	}
 	
-	public MedicalHistory(String illness, String doctorDetails, String medicines, Date startDate, Date endDate,
+	public MedicalHistory(String historyId, String illness, String doctorDetails, String medicines, Date startDate, Date endDate,
 			float dosageAmt, Time dosageTime, boolean emailNotification) {
 		super();
+		this.historyId = historyId;
 		this.illness = illness;
 		this.doctorDetails = doctorDetails;
 		this.medicines = medicines;
@@ -29,6 +31,14 @@ public class MedicalHistory {
 		this.dosageTime = dosageTime;
 		this.emailNotification = emailNotification;
 	}
+	public String getHistoryId() {
+		return historyId;
+	}
+
+	public void setHistoryId(String historyId) {
+		this.historyId = historyId;
+	}
+
 	public String getIllness() {
 		return illness;
 	}

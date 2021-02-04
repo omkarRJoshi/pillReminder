@@ -25,3 +25,5 @@ insert into MedicalHistory values
 ("history3", "user2", "user2", "nausia", "pns", "pnsPill", "12-1-2021", "30-2-2021", 5, "2pm", false),
 ("history4", "dept5", "user2", "no-illness", "pns", "pnsPill", "12-1-2021", "30-2-2021", 5, "2pm", false),
 ("history5", "dept2", "user1", "allergy", "pushpak", "pushPill", "12-1-2021", "30-2-2021", 5, "2pm", false);
+
+Insert into dependent (dependentId, userId, relation, name, emailid, contactNo, bloodGroup, dob, weight, height) values ('user1', 'javaDependent1', 'javaReln', 'omkar', 'uniqueEmail@mail.com', '9545982650', 'B+', '1998-06-12', 55.2, 5.7)

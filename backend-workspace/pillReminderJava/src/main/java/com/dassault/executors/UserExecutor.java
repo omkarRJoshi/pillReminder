@@ -18,7 +18,6 @@ public class UserExecutor {
 			pstmt.setString(2, user.getEmail());
 			pstmt.setString(3, user.getCountry());
 			pstmt.setString(4, user.getPassword());
-			System.out.println(pstmt);
 			
 			inserted = pstmt.executeUpdate() == 1;
 		} catch (SQLException e) {

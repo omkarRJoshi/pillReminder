@@ -1,9 +1,11 @@
 package com.dassault.restModules;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.UUID;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -49,6 +51,16 @@ public class DependentController {
 		boolean updatePerson = personExecutor.updatePerson(connection, null, personId, dependent);
 		
 		return updatePerson;
+	}
+	
+	@CrossOrigin("*")
+	@GetMapping("/user/relations")
+	public ArrayList<String[]> getRelations(@RequestParam String userId){
+		ArrayList<String[]> allRelations = new ArrayList<>();
+		
+		dependentExecutor.allRelations(connection, null, userId, allRelations);
+		
+		return allRelations;
 	}
 	
 }

@@ -33,7 +33,7 @@ public class MedicalHistoryExecutor {
 			inserted = pstmt.executeUpdate() == 1;
 			pstmt.close();
 		} catch (SQLException e) {
-			System.out.println("Exception during pstmt of MedicalHistoryExecutor " + e.getMessage());
+			System.out.println("Exception during pstmt of addMedicalHistory MedicalHistoryExecutor " + e.getMessage());
 		}
 		return inserted;
 	}
@@ -46,6 +46,7 @@ public class MedicalHistoryExecutor {
 			resultSet = pstmt.executeQuery();
 			
 			while(resultSet.next()) {
+				String historyId = resultSet.getString(1);
 				String illness = resultSet.getString(3);
 				String doctorDetails = resultSet.getString(4);
 				String medicines = resultSet.getString(5);
@@ -54,14 +55,14 @@ public class MedicalHistoryExecutor {
 				float dosageAmt =  resultSet.getFloat(8);
 				Time dosageTime = resultSet.getTime(9);
 				boolean emailNotification = resultSet.getBoolean(10);
-				MedicalHistory history = new MedicalHistory(illness, doctorDetails, medicines, startDate, endDate, dosageAmt, dosageTime, emailNotification);
+				MedicalHistory history = new MedicalHistory(historyId, illness, doctorDetails, medicines, startDate, endDate, dosageAmt, dosageTime, emailNotification);
 				histories.add(history);
 			}
 			
 			resultSet.close();
 			pstmt.close();
 		} catch (SQLException e) {
-			System.out.println("Exception during pstmt of getPerson PersonExecutor " + e.getMessage());
+			System.out.println("Exception during pstmt of getMedicalHistory PersonExecutor " + e.getMessage());
 		}
 	}
 	
@@ -85,9 +86,25 @@ public class MedicalHistoryExecutor {
 			updated = pstmt.executeUpdate() == 1;
 			pstmt.close();
 		} catch (SQLException e) {
-			System.out.println("Exception during pstmt of MedicalHistoryExecutor " + e.getMessage());
+			System.out.println("Exception during pstmt of updateMedicalHistory MedicalHistoryExecutor " + e.getMessage());
 		}
 		
 		return updated;
+	}
+	
+	public boolean deleteMedicalHistory(Connection connection, PreparedStatement pstmt, String historyId) {
+		boolean deleted = false;
+		
+		String query = "delete from " + Constants.medicalHistoryTb + " where historyId = " + "'" + historyId + "'";
+		
+		try {
+			pstmt = connection.prepareStatement(query);
+			deleted = pstmt.executeUpdate() == 1;
+			pstmt.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Exception during pstmt of MedicalHistoryExecutor " + e.getMessage());
+		}
+		return deleted;
 	}
 }

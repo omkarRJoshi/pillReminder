@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dassault.components.Person;
 import com.dassault.components.User;
+import com.dassault.executors.DependentExecutor;
 import com.dassault.executors.PersonExecutor;
 import com.dassault.executors.UserExecutor;
 import com.dassault.utils.Database;
@@ -21,6 +23,7 @@ public class UserController {
 	Connection connection;
 	PersonExecutor personExecutor;
 	UserExecutor userExecutor;
+	DependentExecutor dependentExecutor;
 	
 	public UserController() {
 		this.connection = Database.getConnection();
@@ -77,4 +80,15 @@ public class UserController {
 		
 		return updatePerson & updateUser;
 	}
+	
+	
+	@CrossOrigin("*")
+	@GetMapping("/person")
+	public Person getPersonDetails(@RequestParam String personId) {
+		Person person = new Person();
+		boolean gotPerson = personExecutor.getPerson(connection, null, personId, person);
+		
+		return (gotPerson) ? person : new Person();
+	}
+	
 }

@@ -1,22 +1,65 @@
-import loginScreen from './components/login-screen';
-import registrationScreen from './components/registration-screen'
-import forgotScreen from './components/forgot-screen';
-import homeScreen from './components/home-screen';
+// import loginScreen from './components/login-screen';
+// import registrationScreen from './components/registration-screen'
+// import forgotScreen from './components/forgot-screen';
+// import homeScreen from './components/home-screen';
+// import profileScreen from './components/profile-screen'
+// import medicalHistoryScreen from './components/medicalHistory-screen';
 
+import render from "./rendering/render";
+
+import cookie from './cookies/cookiesOps';
 import './styles/styles.css';
 
 
 const middleScreen = document.querySelector("#middleScreen");
 
-middleScreen.innerHTML = loginScreen.render();
-document.getElementById('postData').addEventListener('submit', loginScreen.after_render);
+// render.register();
+// render.login();
+// render.forgotPassword();
+// render.home();
+// render.profile();
+render.medicalHistory();
+
+// middleScreen.innerHTML = loginScreen.render();
+// if(cookie.get("userEmail") != ""){
+//   document.getElementById("email").value = cookie.get("userEmail");
+//   document.getElementById("pwd").value = cookie.get("userPassword");
+// }
+// document.getElementById('postData').addEventListener('click', loginScreen.after_render);
 
 // middleScreen.innerHTML = registrationScreen.render();
 // document.getElementById('postData').addEventListener('click', registrationScreen.after_render);
 
 // middleScreen.innerHTML = forgotScreen.render();
 // document.getElementById('postData').addEventListener('click', forgotScreen.after_render);
+// document.getElementById('backToLogin').addEventListener('click', loginScreen.render);
+
+// homeScreen.render();
 
 // middleScreen.innerHTML = homeScreen.render();
+// async function fun(){
+//   const userTb = document.querySelector("#user");
+//   const dependentTb = document.querySelector("#dependent")
+//   userTb.innerHTML = await homeScreen.userHistory();
+//   dependentTb.innerHTML = await homeScreen.dependentHistory();
+// }
+// fun();
+
+// middleScreen.innerHTML = profileScreen.render();
+// export default middleScreen;
+// async function funForProfile(){
+//   const usertable = document.querySelector("#usertable");
+//   const dependentTable = document.querySelector("#dependentTable");
+//   usertable.innerHTML = await profileScreen.userDetails(cookie.get("userId"), "self");
+//   dependentTable.innerHTML = await profileScreen.dependentDetails();
+// }
+// funForProfile();
+
+// middleScreen.innerHTML = medicalHistoryScreen.render();
+// async function funForMedicalHistory(){
+//   const historyTable = document.querySelector("#historyTable");
+//   historyTable.innerHTML = await medicalHistoryScreen.historyTable(cookie.get("userId"), "self");
+// }
+// funForMedicalHistory();
 
 export default middleScreen;

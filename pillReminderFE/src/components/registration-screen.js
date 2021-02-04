@@ -1,52 +1,84 @@
 import api from '../api/api';
+import middleScreen from "../index";
+import homeScreen from "./home-screen";
+import cookie from '../cookies/cookiesOps'
 
 const registrationScreen = {
 
-  after_render: function() {
+  after_render: function(e) {
+    e.preventDefault();
     const registrationData = {
-      "name" : document.getElementById('firstName').value + " " + document.getElementById('lastName').value, 
+      "name" : document.getElementById('fname').value + " " + document.getElementById('lname').value, 
       "email" : document.getElementById('email').value,
       "contact" : document.getElementById('contact').value,
-       "dob" : document.getElementById('dob').value,
+      "country" : document.getElementById('contact').value,
+      "dob" : document.getElementById('birthday').value,
       "password" : document.getElementById('pwd').value,
     };
-    api.postJson("http://localhost:8081/registerUser", registrationData);
-    alert(JSON.stringify(registrationData));
+    console.log(registrationData);
+    api.postJson("http://localhost:8081/registerUser", registrationData)
+       .then((response) => response.text()).then((data) => {
+        if (data == "") {
+          alert("Something went wrong please try again");
+        } else {
+          console.log(data);
+          cookie.set("userId", data, 20);
+          cookie.set("userEmail", registrationData.email, 20);
+          cookie.set("userPassword", registrationData.password);
+          middleScreen.innerHTML = homeScreen.render();
+
+          async function fun(){
+            const userTb = document.querySelector("#user");
+            const dependentTb = document.querySelector("#dependent")
+            userTb.innerHTML = await homeScreen.userHistory();
+            dependentTb.innerHTML = await homeScreen.userHistory();
+          }
+          fun();
+        }
+      });
+    
   },
 
   render:function(){
     console.log("inside render reistration screen");
     return `
-    <div class= "register">
-      <h2>Registeration</h2>
-      <form>
-      <label for="firstName">First Name</label>
-      <input type="text" id="firstName" name="firstName" placeholder="Enter Your First Name...">
-
-      <label for="lastName">Last Name</label>
-          <input type="text" id="lastName" name="lastName" placeholder="Enter Your Last Name...">
-
-          <label for="Email">Email</label>
-          <input type="text" id="email" name="Email" placeholder="Enter Your Email...">
-          
-          <label for="contact">Contact No.</label>
-          <input type="text" id="contact" name="contact" placeholder="Enter Your Contact No...">
-          
-          <label for="dob">Date of Birth</label><br>
-          <input type="date" id="dob" name="dob">
-
-          <label for="pwd">Password</label>
-          <input type="password" id="pwd" name="password" placeholder="Enter Your Password...">
-
-          <label for="cpwd">Confirm   Password</label>
-          <input type="password" id="cpwd" name="cpassword" placeholder="Confirm Password...">
-              
-          <input id="postData" type="submit" value="Submit">
-
-          <a href="index.html"> Login Here</a>
-          
+      <h3>Registration</h3><br>
+      <form action="/action_page.php">
+        <div class="form-group">
+          <label for="firstname">First Name:</label>
+          <input type="Text" class="form-control" id="fname">
+        </div>
+        <div class="form-group">
+          <label for="lastname">Last Name:</label>
+          <input type="Text" class="form-control" id="lname">
+        </div>
+        <div class="form-group">
+          <label for="email">Email address:</label>
+          <input type="email" class="form-control" id="email">
+        </div>
+        <div class="form-group">
+          <label for="Contact">Contact:</label>
+          <input type="text" class="form-control" id="contact">
+        </div>
+        <div class="from-group">
+          <label for="dob">Date of Birth:</label><br>
+          <input type="date" id="birthday" name="birthday">
+        </div>
+        <div class="form-group">
+          <label for="Country">Country:</label>
+          <input type="Text" class="form-control" id="Country">
+        </div>
+        <div class="form-group">
+          <label for="pwd">Password:</label>
+          <input type="password" class="form-control" id="pwd">
+        </div>
+        <div class="form-group">
+          <label for="cpwd">Confirm Password:</label>
+          <input type="password" class="form-control" id="cpwd">
+        </div><br>
+        <br>
+        <button id = "postData" type="submit" class="btn btn-primary">Submit</button>
       </form>
-  </div>
     `;
   }
 }

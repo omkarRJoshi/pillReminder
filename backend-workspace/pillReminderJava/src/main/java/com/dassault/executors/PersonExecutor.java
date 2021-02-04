@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.dassault.components.Person;
-import com.dassault.components.User;
 import com.dassault.utils.Constants;
 
 public class PersonExecutor {
@@ -58,7 +57,7 @@ public class PersonExecutor {
 		return updated;
 	}
 	
-	public boolean getPerson(Connection connection, PreparedStatement pstmt, String personId, User user) {
+	public boolean getPerson(Connection connection, PreparedStatement pstmt, String personId, Person user) {
 		String query = "select * from " + Constants.personTb + " where personId = " + "'" + personId + "'";
 		ResultSet resultSet = null;
 		boolean gotPerson = false;
@@ -87,6 +86,7 @@ public class PersonExecutor {
 		
 		return gotPerson;
 	}
+	
 	
 	
 }

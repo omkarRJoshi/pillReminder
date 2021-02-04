@@ -50,5 +50,5 @@ create table MedicalHistory(
 -- ADD UNIQUE (email); 
 -- delete from person where personId = '82f5d4fdbe1c4583a207560edf168e1f';
 select * from person;
-select * from relation;
+-- select * from relation;
 select * from user;

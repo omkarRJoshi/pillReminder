@@ -2,7 +2,9 @@ package com.dassault.executors;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import com.dassault.utils.Constants;
 
@@ -28,6 +30,30 @@ public class DependentExecutor {
 		}
 		
 		return inserted;
+	}
+	
+	public void allRelations(Connection connection, PreparedStatement pstmt, String userId, ArrayList<String[]> relations) {
+		String query = "Select * from " + Constants.relationTb + " where userId = " + "'" + userId + "'";
+		System.out.println(query);
+		ResultSet resultSet = null;
+		
+		try {
+			pstmt = connection.prepareStatement(query);
+			resultSet = pstmt.executeQuery();
+			
+			while(resultSet.next()) {
+				String[] relation = new String[2];
+				relation[0] = resultSet.getString(2);
+				relation[1] = resultSet.getString(3);
+				
+				relations.add(relation);
+			}
+			
+			resultSet.close();
+			pstmt.close();
+		} catch (SQLException e) {
+			System.out.println("Exception during setRelation method of DependentExecutor " + e.getMessage());
+		}
 	}
 	
 }
