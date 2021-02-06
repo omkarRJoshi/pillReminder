@@ -52,60 +52,7 @@ const profileScreen = {
       </div>
     </div>
     `;
-    const profile1 = `
-    <div class="row">
-     <!--   <div class="col-sm-2" style="height:5000px,background-color:rgb(231, 240, 231)";>blank</div>-->
-       <div class="col-sm-6 image"   id="im"> 
-        <img src="https://www.seekpng.com/png/full/356-3562377_personal-user.png" width="100px" height="92px">  
-    </div>
-       <div class="col-sm-6"; id="pro">
-        <h2>Profile</h2>
-        <p class="font-weight-light">Do you remember to take your meds today ?</p>
-
-       
-    </div>
-     
-       
-         <div class="col-sm-6" style="background-color:rgb(235, 235, 247);" id="usertable">
-        
-        </div>
-         <div class="col-sm-6"; id="deptable">
-        
-
-              <div class="dropdown">
-              <div class="AddView row">
-              <div class="dropdown col-sm-6">
-                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">View Dependent
-                <span class="caret"></span></button>
-                <ul class="dropdown-menu" id = "relations">
-                  
-                </ul>
-              </div> 
-
-              <div class="dropdown col-sm-6">
-                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Add Dependent
-                <span class="caret"></span></button>
-                <ul class="dropdown-menu">
-                  <li><a href="#" class = "depAdd">Mother</a></li>
-                  <li><a href="#" class = "depAdd">Father</a></li>
-                  <li><a href="#" class = "depAdd">Children</a></li>
-                  <li><a href="#" class = "depAdd">Spouse</a></li>
-                  <li><a href="#" class = "depAdd">Mother-in-law</a></li>
-                  <li><a href="#" class = "depAdd">Fater--in-law</a></li>
-                  <li><a href="#" class = "depAdd">a</a></li>
-                  <li><a href="#" class = "depAdd">b</a></li>
-                  <li><a href="#" class = "depAdd">c</a></li>
-                </ul>
-              </div> 
-                </div> 
-
-            <div id = "dependentTable">
-            
-            </div>
-        </div>
-        
-       </div>
-    `;
+    
     return profile;
   },
 
