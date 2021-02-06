@@ -34,6 +34,18 @@
       'Content-Type': 'application/json',
       },
       })
+   },
+
+   putJson : async function(url, data){
+    console.log(url);
+    console.log(data);
+    return await fetch(url, {
+      method: 'PUT',
+      headers: {
+      'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+      })
    }
  }
  

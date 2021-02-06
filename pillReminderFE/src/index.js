@@ -1,10 +1,3 @@
-// import loginScreen from './components/login-screen';
-// import registrationScreen from './components/registration-screen'
-// import forgotScreen from './components/forgot-screen';
-// import homeScreen from './components/home-screen';
-// import profileScreen from './components/profile-screen'
-// import medicalHistoryScreen from './components/medicalHistory-screen';
-
 import render from "./rendering/render";
 
 import cookie from './cookies/cookiesOps';
@@ -13,12 +6,23 @@ import './styles/styles.css';
 
 const middleScreen = document.querySelector("#middleScreen");
 
-// render.register();
-// render.login();
+
+// render.profile.entireScreen();
+if(cookie.get("userEmail") != "" && cookie.get("userPassword") != "" && cookie.get("userId") != "")
+  render.login();
+else
+  render.register();
+
+
+
+
+
+
+
 // render.forgotPassword();
 // render.home();
 // render.profile();
-render.medicalHistory();
+// render.medicalHistory();
 
 // middleScreen.innerHTML = loginScreen.render();
 // if(cookie.get("userEmail") != ""){

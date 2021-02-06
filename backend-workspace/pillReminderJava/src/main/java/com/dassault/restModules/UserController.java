@@ -75,9 +75,10 @@ public class UserController {
 	@CrossOrigin("*")
 	@PutMapping("/user/update")
 	public boolean updateUser(@RequestParam String personId, @RequestBody User user) {
+		System.out.println("update user");
 		boolean updatePerson = personExecutor.updatePerson(connection, null, personId, user);
 		boolean updateUser = userExecutor.updateUser(connection, null, personId, user);
-		
+		System.out.println(updatePerson + " " + updatePerson);
 		return updatePerson & updateUser;
 	}
 	

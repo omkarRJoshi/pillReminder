@@ -1,6 +1,6 @@
 import apiData from '../api/api'
 import cookie from "../cookies/cookiesOps"
-
+import render from "../rendering/render"
 const medicalHistoryScreen = {
   render: function(){
     return `
@@ -17,13 +17,13 @@ const medicalHistoryScreen = {
     </div>
 
     <div class = "col-sm-4">
-      <button class="btn btn-primary" type="button">Add more</button>
+      <button id="addHistory" class="btn btn-primary" type="button">Add more</button>
     </div>
 
   </div>
 
   <div class="row" style="margin-top:10px">
-    <div id = "historyTable" class="class=col-sm-12 tabl">
+    <div id = "historyTable" class="class=col-sm-12 tabl" style : >
       
     </div>
 
@@ -32,21 +32,20 @@ const medicalHistoryScreen = {
   },
 
   showTable : async function(historyArray){
-    console.log(historyArray);
     const historyTable = `
-    <table class="table table-condensed">
+    <table class="table table-condensed" id="medicalHistoryTable">
     <thead>
       <tr>
-        <th>Illness</th>
-        <th>Doctor details</th>
-        <th>Medicines</th>
-        <th>Start Date</th>
-        <th>End Date</th>
-        <th>Dosage Amount</th>
-        <th>Dosage freq</th>
-        <th>Dosage time</th>
-        <th>Email notification</th>
-        <th>Remove</th>
+        <th><center>Illness</center></th>
+        <th><center>Doctor details</center></th>
+        <th><center>Medicines</center></th>
+        <th><center>Start Date</center></th>
+        <th><center>End Date</center></th>
+        <th><center>Dosage Amount</center></th>
+        <th><center>Dosage freq</center></th>
+        <th><center>Dosage time</center></th>
+        <th><center>Email notification</center></th>
+        <th><center>Remove</center></th>
       </tr>
     </thead>
     <tbody>
@@ -73,38 +72,12 @@ const medicalHistoryScreen = {
   historyTable : async function(personId, relation){
     const url = new URL("http://localhost:8081/person/medicalHistory");
     
-    console.log(personId, relation);
+    // console.log(personId, relation);
     const params = {personId:personId};
     Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
     // console
     const data = await apiData.getJson(url);
     return this.showTable(data);
-  },
-
-  getRelations : async function(){
-    const userId = cookie.get("userId");
-    const url = new URL("http://localhost:8081/user/relations");
-    const params = {userId:userId};
-    Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
-    const relations = await apiData.getJson(url);
-    // console.log(relations);
-    return relations;
-  },
-
-  setRelations : async function(){
-    const relations = await this.getRelations();
-    console.log(relations);
-    const dependentRelations = `
-    <li><a href="#" id = ${cookie.get("userId")} class="foo">self</a></li>
-      ${
-        relations.map(relation =>
-          `
-          <li><a href="#" id = ${relation[0]} class="foo">${relation[1]}</a></li>
-          `
-          ).join("")
-      }
-    `;
-    return dependentRelations;
   },
 
   removeHistory : async function(historyId){
@@ -117,7 +90,66 @@ const medicalHistoryScreen = {
     const row = document.getElementById(historyId);
     row.remove();
     console.log("history deleted");
+  },
+
+  addNewHistory : function(personId, relation){
+    // console.log("***" + personId + "***" + relation);
+    const table = document.getElementById("medicalHistoryTable");
+    var row = table.insertRow(1);
+    row.innerHTML = `
+      <td><center><input type="text" id="illness" name="fname"></center></td>
+      <td><center><input type="text" id="doctorDetails" name="fname"></center></td>
+      <td><center><input type="text" id="medicines" name="fname"></center></td>
+      <td><center><input type="date" id="startDate" name="fname"></center></td>
+      <td><center><input type="date" id="endDate" name="fname"></center></td>
+      <td><center><input type="number" id="dosageAmt" name="fname" min="0.5"></center></td>
+      <td><center><input type="number" id="dosageFreq" name="fname" min="1"></center></td>
+      <td><center><input type="time" id="dosageTime" name="fname"></center></td>
+      <td><center><input type="checkbox" id="emailNotification" name="fname"></center></td>
+      <td><center><button id = "addHis">Add</button> <span id="del">&#x274C</span></center></td>
+    `;
+    
+    del.addEventListener('click', function(){
+      document.getElementById("addHistory").disabled = false;
+      row.remove();
+    })
+    const addHistory = document.getElementById("addHis");
+    addHistory.addEventListener('click', addAfterClick)
+     function addAfterClick(){
+      console.log("insdei after click");
+      const history = {
+        "illness" : document.getElementById("illness").value,
+        "doctorDetails" : document.getElementById("doctorDetails").value,
+        "medicines" : document.getElementById("medicines").value,
+        "startDate" : document.getElementById("startDate").value,
+        "endDate" : document.getElementById("endDate").value,
+        "dosageAmt" : document.getElementById("dosageAmt").value,
+        "dosageFreq" : document.getElementById("dosageFreq").value,
+        "dosageTime" : document.getElementById("dosageTime").value + ":00",
+        "emailNotification" : document.getElementById("emailNotification").value == "on" ? true : false
+      };
+      console.log(history);
+      const url = new URL("http://localhost:8081/person/addMedicalHistory");
+      
+      const params = {personId:personId};
+      Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
+      document.getElementById("addHistory").disabled = false;
+      apiData.postJson(url, history)
+      .then((response) => response.text())
+      .then((data) => {
+        if (data == "") {
+          alert("Something went wrong");
+        } else {
+          alert("Medical History added successfully for " + relation);
+          render.medicalHistory.populateTable(personId, relation);
+        }
+      });;
+    }
+    
   }
+
+  
+
 }
 
 export default medicalHistoryScreen;

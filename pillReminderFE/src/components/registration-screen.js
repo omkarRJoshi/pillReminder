@@ -1,6 +1,5 @@
 import api from '../api/api';
-import middleScreen from "../index";
-import homeScreen from "./home-screen";
+import render from "../rendering/render"
 import cookie from '../cookies/cookiesOps'
 
 const registrationScreen = {
@@ -11,7 +10,7 @@ const registrationScreen = {
       "name" : document.getElementById('fname').value + " " + document.getElementById('lname').value, 
       "email" : document.getElementById('email').value,
       "contact" : document.getElementById('contact').value,
-      "country" : document.getElementById('contact').value,
+      "country" : document.getElementById('Country').value,
       "dob" : document.getElementById('birthday').value,
       "password" : document.getElementById('pwd').value,
     };
@@ -24,16 +23,9 @@ const registrationScreen = {
           console.log(data);
           cookie.set("userId", data, 20);
           cookie.set("userEmail", registrationData.email, 20);
-          cookie.set("userPassword", registrationData.password);
-          middleScreen.innerHTML = homeScreen.render();
-
-          async function fun(){
-            const userTb = document.querySelector("#user");
-            const dependentTb = document.querySelector("#dependent")
-            userTb.innerHTML = await homeScreen.userHistory();
-            dependentTb.innerHTML = await homeScreen.userHistory();
-          }
-          fun();
+          cookie.set("userPassword", registrationData.password, 20);
+          render.setHeader();
+          render.home();
         }
       });
     

@@ -95,15 +95,13 @@ public class UserExecutor {
 		boolean updated = false;
 		
 		String query = "Update " + Constants.userTb + " set " +
-				   	   "email = ?, country = ?, password = ?" + 
+				   	   "email = ? " + 
 				   	   "where userId = " + "'" + userId + "'";
 		
 		try {
 			pstmt = connection.prepareStatement(query);
 			pstmt.setString(1, user.getEmail());
-			pstmt.setString(2, user.getCountry());
-			pstmt.setString(3, user.getPassword());
-			
+			System.out.println(pstmt);
 			updated = pstmt.executeUpdate() == 1;
 		} catch (SQLException e) {
 			System.out.println("Exception during pstmt in method updateUser of UserExecutor " + e.getMessage());

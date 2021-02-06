@@ -21,8 +21,6 @@ public class DependentExecutor {
 			pstmt.setString(2, dependentId);
 			pstmt.setString(3, relation);
 			
-			System.out.println(pstmt);
-			
 			inserted = pstmt.executeUpdate() == 1;
 			pstmt.close();
 		} catch (SQLException e) {
@@ -34,7 +32,6 @@ public class DependentExecutor {
 	
 	public void allRelations(Connection connection, PreparedStatement pstmt, String userId, ArrayList<String[]> relations) {
 		String query = "Select * from " + Constants.relationTb + " where userId = " + "'" + userId + "'";
-		System.out.println(query);
 		ResultSet resultSet = null;
 		
 		try {

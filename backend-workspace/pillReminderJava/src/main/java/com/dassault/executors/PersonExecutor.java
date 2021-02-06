@@ -37,7 +37,6 @@ public class PersonExecutor {
 		String query = "Update " + Constants.personTb + " set " +
 					   "name = ?, email = ?, contact = ?, dob = ?, bloodGroup = ?, weight = ?, height = ? " +
 					   "where personId = " + "'" + personId + "'";
-		
 		try {
 			pstmt = connection.prepareStatement(query);
 			pstmt.setString(1, p.getName());
@@ -47,7 +46,7 @@ public class PersonExecutor {
 			pstmt.setString(5, p.getBloodGroup());
 			pstmt.setFloat(6, p.getWeight());
 			pstmt.setFloat(7, p.getHeight());
-			
+			System.out.println(pstmt);
 			updated = pstmt.executeUpdate() == 1;
 			pstmt.close();
 		} catch (SQLException e) {

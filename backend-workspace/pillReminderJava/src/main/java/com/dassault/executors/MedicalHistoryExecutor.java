@@ -16,8 +16,8 @@ public class MedicalHistoryExecutor {
 	public boolean addMedicalHistory(Connection connection, PreparedStatement pstmt, String historyId, String personId, MedicalHistory medicalHistory) {
 		boolean inserted = false;
 		String query = "insert into " + Constants.medicalHistoryTb + 
-					   "(historyId, personId , illness, doctorDetails, medicine, startDate, endDate, dosageAmt, dosageTime, emailNotfication)  " + 
-					   "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+					   "(historyId, personId , illness, doctorDetails, medicine, startDate, endDate, dosageAmt, dosageTime, emailNotfication, dosageFreq)  " + 
+					   "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		try {
 			pstmt = connection.prepareStatement(query);
 			pstmt.setString(1, historyId);
@@ -30,6 +30,7 @@ public class MedicalHistoryExecutor {
 			pstmt.setFloat(8, medicalHistory.getDosageAmt());
 			pstmt.setTime(9, medicalHistory.getDosageTime());
 			pstmt.setBoolean(10, medicalHistory.isEmailNotification());
+			pstmt.setFloat(11, medicalHistory.getDosageFreq());
 			inserted = pstmt.executeUpdate() == 1;
 			pstmt.close();
 		} catch (SQLException e) {
@@ -55,7 +56,9 @@ public class MedicalHistoryExecutor {
 				float dosageAmt =  resultSet.getFloat(8);
 				Time dosageTime = resultSet.getTime(9);
 				boolean emailNotification = resultSet.getBoolean(10);
-				MedicalHistory history = new MedicalHistory(historyId, illness, doctorDetails, medicines, startDate, endDate, dosageAmt, dosageTime, emailNotification);
+				float dosageFreq = resultSet.getFloat(11);
+				MedicalHistory history = new MedicalHistory(historyId, illness, doctorDetails, medicines, startDate, endDate,
+						dosageAmt, dosageTime, emailNotification,dosageFreq);
 				histories.add(history);
 			}
 			
@@ -70,7 +73,7 @@ public class MedicalHistoryExecutor {
 		boolean updated = false;
 		
 		String query = "Update " + Constants.medicalHistoryTb + " set " +
-					   "illness = ?, doctorDetails = ?, medicine = ?, startDate = ?, endDate = ?, dosageAmt = ?, dosageTime = ?, emailNotfication = ? " +
+					   "illness = ?, doctorDetails = ?, medicine = ?, startDate = ?, endDate = ?, dosageAmt = ?, dosageTime = ?, emailNotfication = ?, dosageFreq = ? " +
 					   "where historyId = " + "'" + historyId + "'";
 		
 		try {
@@ -83,6 +86,7 @@ public class MedicalHistoryExecutor {
 			pstmt.setFloat(6, medicalHistory.getDosageAmt());
 			pstmt.setTime(7, medicalHistory.getDosageTime());
 			pstmt.setBoolean(8, medicalHistory.isEmailNotification());
+			pstmt.setFloat(9, medicalHistory.getDosageFreq());
 			updated = pstmt.executeUpdate() == 1;
 			pstmt.close();
 		} catch (SQLException e) {

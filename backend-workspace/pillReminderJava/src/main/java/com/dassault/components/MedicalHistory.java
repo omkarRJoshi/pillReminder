@@ -11,6 +11,7 @@ public class MedicalHistory {
 	Date startDate;
 	Date endDate;
 	float dosageAmt;
+	float dosageFreq;
 	Time dosageTime;
 	boolean emailNotification;
 	
@@ -19,7 +20,7 @@ public class MedicalHistory {
 	}
 	
 	public MedicalHistory(String historyId, String illness, String doctorDetails, String medicines, Date startDate, Date endDate,
-			float dosageAmt, Time dosageTime, boolean emailNotification) {
+			float dosageAmt, Time dosageTime, boolean emailNotification, float dosageFreq) {
 		super();
 		this.historyId = historyId;
 		this.illness = illness;
@@ -30,7 +31,16 @@ public class MedicalHistory {
 		this.dosageAmt = dosageAmt;
 		this.dosageTime = dosageTime;
 		this.emailNotification = emailNotification;
+		this.dosageFreq = dosageFreq;
 	}
+	public float getDosageFreq() {
+		return dosageFreq;
+	}
+
+	public void setDosageFreq(float dosageFreq) {
+		this.dosageFreq = dosageFreq;
+	}
+
 	public String getHistoryId() {
 		return historyId;
 	}

@@ -42,6 +42,7 @@ create table MedicalHistory(
     startDate varchar(40),
     endDate varchar(40),
     dosageAmt float,
+    dosageFreq float,
     dosageTime varchar(40),
     emailNotfication boolean,
     primary key (historyId),

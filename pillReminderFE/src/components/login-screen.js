@@ -1,7 +1,5 @@
 import api from "../api/api";
 import render from "../rendering/render"
-import middleScreen from "../index";
-import homeScreen from "./home-screen";
 import cookie from "../cookies/cookiesOps"
 
 
@@ -25,15 +23,9 @@ const loginScreen = {
           cookie.set("userEmail", email, 20);
           cookie.set("userPassword", password);
           
+          render.setHeader();
           render.home();
-          // middleScreen.innerHTML = homeScreen.render();
-          // async function setTables(){
-          //   const userTb = document.querySelector("#user");
-          //   const dependentTb = document.querySelector("#dependent")
-          //   userTb.innerHTML = await homeScreen.userHistory(data, "self");
-          //   dependentTb.innerHTML = await homeScreen.dependentHistory();
-          // }
-          // setTables();
+          
         }
       });
   },
