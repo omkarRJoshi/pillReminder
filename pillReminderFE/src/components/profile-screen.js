@@ -38,9 +38,6 @@ const profileScreen = {
                   <li><a href="#" class = "depAdd">Spouse</a></li>
                   <li><a href="#" class = "depAdd">Mother-in-law</a></li>
                   <li><a href="#" class = "depAdd">Fater--in-law</a></li>
-                  <li><a href="#" class = "depAdd">a</a></li>
-                  <li><a href="#" class = "depAdd">b</a></li>
-                  <li><a href="#" class = "depAdd">c</a></li>
                 </ul>
               </div> 
 

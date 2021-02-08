@@ -92,17 +92,6 @@ const homeScreen = {
   },
 
   dependentHistory:async function(personId = "", relation = ""){
-    // const userId = cookie.get("userId");
-    // const url = new URL("http://localhost:8081/user/relations");
-    // const params = {userId:userId};
-    // Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
-    // // console
-    // const medicalHistory = await apiData.getJson(url);
-    // if(medicalHistory.length == 0)
-    //   return homeScreen.userHistory("abc", "relation-not-set");
-    // const personId = medicalHistory[0][0];
-    // const relation = medicalHistory[0][1];
-    // return homeScreen.userHistory(personId, relation);
     if (personId == "") {
       const currDep = await profileScreen.getFirstDependent();
       if(currDep.length == 0){
