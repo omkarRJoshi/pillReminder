@@ -24,7 +24,7 @@ const loginScreen = {
           cookie.set("userPassword", password);
           
           render.setHeader();
-          render.home();
+          render.home.entireScreen();
           
         }
       });
@@ -44,9 +44,11 @@ const loginScreen = {
           <input type="password" class="form-control" id="pwd">
         </div>
         
-        <button id="postData" type="submit" class="btn btn-primary">Submit</button>
+        <button id="login-user" type="Login" class="btn btn-primary">Login</button>
+        <button id="register-user" type="Register" class="btn btn-primary">Register</button>
+        
       </form>  
-      <a href="forgot.html"> Forgot Password</a>
+      <a id="forgotPass">forgot password</a>
     `;
   },
 };

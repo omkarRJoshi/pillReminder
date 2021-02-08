@@ -26,9 +26,8 @@ const forgotScreen = {
           <input type="password" class="form-control" id="cpwd">
         </div><br>
         <button id = "postData" type="submit" class="btn btn-primary">Submit</button>
+        <button id="login" type="submit" class="btn btn-primary">Login-here</button>
       </form>
-      <button id="backToLogin" type="submit" class="btn btn-primary">Login-here</button>
-      <a href="login.html"> Login Here</a>
     `;
   }
 }

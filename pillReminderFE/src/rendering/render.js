@@ -5,6 +5,8 @@ import homeScreen from "../components/home-screen";
 import profileScreen from "../components/profile-screen";
 import medicalHistoryScreen from "../components/medicalHistory-screen";
 import populateDropdown from "../components/populateDropdown";
+import validation from "../validation/registration-validation"
+
 import cookie from "../cookies/cookiesOps";
 
 import apiData from "../api/api";
@@ -14,22 +16,32 @@ const render = {
   setHeader: function () {
     const headerInit = document.getElementById("header-init");
     headerInit.innerHTML = `
-        <li class="active" id = "home"><a>Home</a></li>
-        <li class="active" id = "profile"><a>Profile</a></li>
-        <li class="active" id = "history"><a>Medical History</a></li>
+        <li class="nav-item header-ptr" id = "home"><a>Home</a></li>
+        <li class="nav-item header-ptr" id = "profile"><a>Profile</a></li>
+        <li class="nav-item header-ptr" id = "history"><a>Medical History</a></li>
       `;
 
     var home = document.getElementById("home");
     var profile = document.getElementById("profile");
     var history = document.getElementById("history");
+    var logout = document.getElementById("logout");
 
-    home.addEventListener("click", render.home);
+    home.addEventListener("click", render.home.entireScreen);
     profile.addEventListener("click", render.profile.entireScreen);
-    history.addEventListener("click", render.medicalHistory.enireScreen);
+    history.addEventListener("click", render.medicalHistory.entireScreen);
+    logout.addEventListener("click", render.login);
+  },
+
+  setBg : function(id1, id2, id3){
+    document.getElementById(id1).className = "nav-item active header-ptr";
+    document.getElementById(id2).className = "nav-item header-ptr";
+    document.getElementById(id3).className = "nav-item header-ptr";
   },
 
   register: function () {
     middleScreen.innerHTML = registrationScreen.render();
+    document.getElementById("login").addEventListener('click', render.login);
+    validation.registration();
     document
       .getElementById("postData")
       .addEventListener("click", registrationScreen.after_render);
@@ -42,54 +54,65 @@ const render = {
       document.getElementById("pwd").value = cookie.get("userPassword");
     }
     document
-      .getElementById("postData")
+      .getElementById("login-user")
       .addEventListener("click", loginScreen.after_render);
+    document
+      .getElementById("register-user")
+      .addEventListener("click", render.register);
+    document
+      .getElementById("forgotPass")
+      .addEventListener("click", render.forgotPassword);
   },
 
   forgotPassword: function () {
     middleScreen.innerHTML = forgotScreen.render();
+    document.getElementById("login").addEventListener('click', render.login);
     document
       .getElementById("postData")
       .addEventListener("click", forgotScreen.after_render);
   },
 
-  home: function () {
-    middleScreen.innerHTML = homeScreen.render();
-    async function populateTables() {
+  home : {
+    entireScreen : async function(){
+      render.setBg("home", "profile", "history");
+
+      middleScreen.innerHTML = homeScreen.render();
+      await render.home.populateTables();
+      
+    },
+    populateTables : async function(personId = "", relation = ""){
       const userTb = document.querySelector("#user");
       const dependentTb = document.querySelector("#dependent");
-      userTb.innerHTML = await homeScreen.userHistory(
-        cookie.get("userId"),
-        "self"
-      );
-      dependentTb.innerHTML = await homeScreen.dependentHistory();
+      userTb.innerHTML = await homeScreen.userHistory(cookie.get("userId"),"self");
+      dependentTb.innerHTML = await homeScreen.dependentHistory(personId, relation);
+      await render.home.setRelations();
+    },
+    setRelations : async function(){
+      console.log("inside sertrelations for home");
+      const dropDownList = document.getElementById("relations");
+      dropDownList.innerHTML = await populateDropdown.setRelations(false);
+      const relations = document.getElementsByClassName("foo");
+      for (const relation of relations) {
+        relation.addEventListener("click", function () {
+          render.home.populateTables(relation.id, relation.innerHTML);
+        });
+      }
     }
-    populateTables();
+    
   },
 
   profile: {
     dependentId: "",
     dependentRelation: "",
     entireScreen: async function () {
+      render.setBg("profile", "home", "history");
+
       middleScreen.innerHTML = profileScreen.render();
       render.profile.setRelations();
       render.profile.populateUserTable();
       render.profile.populateDependentTable();
-      
-      // const dependents = document.getElementsByClassName("depAdd");
-      // for (const dependent of dependents) {
-      //   const rel = dependent.innerHTML;
-      //   dependent.addEventListener("click", function () {
-      //     if(existingRel.includes(rel)){
-      //       alert(`relation ${rel} alredy exist`);
-      //     }
-      //     else{
-      //       document.getElementsByClassName("profileEdit")[1].disabled = true;
-      //       profileScreen.addDependet(rel);
-      //     }
-      //   });
-      // }
     },
+
     setRelations: async function () {
       const dropDownList = document.querySelector("#relations");
       dropDownList.innerHTML = await populateDropdown.setRelations(false);
@@ -168,8 +191,11 @@ const render = {
   medicalHistory: {
     personId: cookie.get("userId"),
     relation: "self",
-    enireScreen: function () {
+    entireScreen: function () {
       // var personId = cookie.get("userId");
+
+      render.setBg("history", "profile", "home");
+
       middleScreen.innerHTML = medicalHistoryScreen.render();
       render.medicalHistory.setRelations();
       render.medicalHistory.populateTable();
@@ -191,14 +217,12 @@ const render = {
         relation.addEventListener("click", function () {
           render.medicalHistory.personId = relation.id;
           render.medicalHistory.relation = relation.innerHTML;
+          document.getElementById("popRel").innerHTML = `${relation.innerHTML}<span class="caret">`;
           render.medicalHistory.populateTable(relation.id, relation.innerHTML);
         });
       }
     },
-    populateTable: async function (
-      personId = cookie.get("userId"),
-      relation = "self"
-    ) {
+    populateTable: async function (personId = cookie.get("userId"),relation = "self") {
       const historyTable = document.querySelector("#historyTable");
       historyTable.innerHTML = await medicalHistoryScreen.historyTable(
         personId,
@@ -217,6 +241,10 @@ const render = {
           if (remove) {
             medicalHistoryScreen.removeHistory(historyId);
           }
+        });
+
+        history.addEventListener('dblclick', function(){
+          medicalHistoryScreen.editHistory(historyId, render.medicalHistory.personId, render.medicalHistory.relation);
         });
       }
     },

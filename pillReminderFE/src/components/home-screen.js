@@ -1,5 +1,5 @@
 import apiData from "../api/api";
-import middleScreen from "../index";
+import profileScreen from "./profile-screen"
 import cookie from "../cookies/cookiesOps";
 
 const homeScreen = {
@@ -44,9 +44,24 @@ const homeScreen = {
     // console
     const medicalHistoryHome = await apiData.getJson(url);
     const date = new Date();
+    const today = date.getFullYear() + "-0" + (date.getMonth() + 1) + "-0" + date.getDate();
+
+    const showDependent = `
+    <div class="dropdown col-sm-6" style="height : 50%">
+    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">View Dependent
+    <span class="caret"></span></button>
+      <ul class="dropdown-menu" id = "relations">
+    
+      </ul>
+    </div> 
+    `
     const userTable = `
-    <div>Pill schedule : <b>${relation}</b></div>
-    <div>Today : <b>${date.getDate() + "-" + date.getMonth() + "-" + date.getFullYear()}</b></div>
+    ${relation != "self" ? showDependent : ''}
+    <div class="col-sm-6" style = "margin-bottom:10px">
+      <div>Pill schedule : <b>${relation}</b>
+      </div>
+      <div>Today : <b>${date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()}</b></div>
+    </div>
     <table class="table table-hover">
     <thead>
       <tr>
@@ -57,15 +72,17 @@ const homeScreen = {
     </thead>
     <tbody>
     ${
-      medicalHistoryHome.map(history =>
-        `
+      
+      medicalHistoryHome.map(history => 
+        (history.startDate <= today && history.endDate >= today) ? `
         <tr>
           <td>${history.medicines}</td>
           <td>${history.dosageAmt} tablet</td>
           <td>At ${history.dosageTime}</td>
         </tr>
-        `
+        ` : ``
       ).join("")
+    
     }
     </tbody>
     </table>
@@ -74,17 +91,29 @@ const homeScreen = {
     return userTable;
   },
 
-  dependentHistory:async function(){
-    const userId = cookie.get("userId");
-    const url = new URL("http://localhost:8081/user/relations");
-    const params = {userId:userId};
-    Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
-    // console
-    const medicalHistory = await apiData.getJson(url);
-    if(medicalHistory.length == 0)
-      return homeScreen.userHistory("abc", "relation-not-set");
-    const personId = medicalHistory[0][0];
-    const relation = medicalHistory[0][1];
+  dependentHistory:async function(personId = "", relation = ""){
+    // const userId = cookie.get("userId");
+    // const url = new URL("http://localhost:8081/user/relations");
+    // const params = {userId:userId};
+    // Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
+    // // console
+    // const medicalHistory = await apiData.getJson(url);
+    // if(medicalHistory.length == 0)
+    //   return homeScreen.userHistory("abc", "relation-not-set");
+    // const personId = medicalHistory[0][0];
+    // const relation = medicalHistory[0][1];
+    // return homeScreen.userHistory(personId, relation);
+    if (personId == "") {
+      const currDep = await profileScreen.getFirstDependent();
+      if(currDep.length == 0){
+        personId = "";
+        relation = "relation-not-set"; 
+      }
+      else{
+        personId = currDep[0][0];
+        relation = currDep[0][1];
+      }
+    }
     return homeScreen.userHistory(personId, relation);
   }
 }

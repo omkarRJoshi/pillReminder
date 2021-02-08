@@ -2,6 +2,7 @@ package com.dassault.restModules;
 
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.UUID;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -48,6 +49,7 @@ public class MedicalHistoryController {
 	public ArrayList<MedicalHistory> getMedicalHistory(@RequestParam String personId){
 		ArrayList<MedicalHistory> histories = new ArrayList<>();
 		medicalHistoryExecutor.getMedicalHistory(connection, null, personId, histories);
+		Collections.sort(histories, (a, b) -> a.getStartDate().compareTo(b.getStartDate()));
 		return histories;
 	}
 	

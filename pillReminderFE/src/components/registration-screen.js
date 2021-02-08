@@ -25,7 +25,7 @@ const registrationScreen = {
           cookie.set("userEmail", registrationData.email, 20);
           cookie.set("userPassword", registrationData.password, 20);
           render.setHeader();
-          render.home();
+          render.home.entireScreen();
         }
       });
     
@@ -69,7 +69,8 @@ const registrationScreen = {
           <input type="password" class="form-control" id="cpwd">
         </div><br>
         <br>
-        <button id = "postData" type="submit" class="btn btn-primary">Submit</button>
+        <button id = "postData" type="submit" class="btn btn-primary">Register</button>
+        <button id = "login" type="submit" class="btn btn-primary">Already User ? Login</button>
       </form>
     `;
   }

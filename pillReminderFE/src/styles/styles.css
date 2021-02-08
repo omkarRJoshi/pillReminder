@@ -10,7 +10,9 @@ body{
   background-color: #AFD5B1;
   box-shadow: 5px 5px #888888;
   }
-  
+  .header-ptr a{
+    cursor: pointer;
+  }
   .heading{
       text-align: center;
       font-family: 'Dancing Script', cursive;
@@ -57,11 +59,6 @@ body{
       clear: both;
     }
   
-  
-  .image{
-    
-  }
-  
   .up{
     height : 100px;
     /* border: 1px solid red; */
@@ -71,8 +68,8 @@ body{
     margin-right: auto;
     align-items: center;
   }
-  .prof-screen{
-   
+  .del{
+    cursor: pointer;
   }
   #usertable{
     margin-left: 20%;
@@ -81,10 +78,12 @@ body{
     margin-right: 15%;
   }
 
- 
+  input[type="checkbox"][readonly] {
+    pointer-events: none;
+  }
   
   #medicalHistoryTable tr td input{
-    padding : 20px;
+    /* padding : 20px; */
     width: 70%;
   }
   

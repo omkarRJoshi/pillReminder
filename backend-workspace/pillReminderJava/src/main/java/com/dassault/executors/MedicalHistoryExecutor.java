@@ -87,6 +87,7 @@ public class MedicalHistoryExecutor {
 			pstmt.setTime(7, medicalHistory.getDosageTime());
 			pstmt.setBoolean(8, medicalHistory.isEmailNotification());
 			pstmt.setFloat(9, medicalHistory.getDosageFreq());
+//			System.out.println(pstmt);
 			updated = pstmt.executeUpdate() == 1;
 			pstmt.close();
 		} catch (SQLException e) {

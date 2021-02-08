@@ -37,8 +37,6 @@
    },
 
    putJson : async function(url, data){
-    console.log(url);
-    console.log(data);
     return await fetch(url, {
       method: 'PUT',
       headers: {
